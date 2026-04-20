@@ -1071,15 +1071,41 @@ existing work tends to...</code></pre>
         </div>
       </div>
     </div>
-    <div style="margin-top:0.7em; display:grid; grid-template-columns:1fr 1.4fr; gap:0.7rem; align-items:start;">
-      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.5em 0.7em;">
-        <p style="font-size:0.54em; font-weight:700; color:var(--accent2); margin:0 0 0.2em;">You can write your own</p>
-        <p style="font-size:0.46em; color:var(--muted); line-height:1.5; margin:0 0 0.3em;">A hook is a Python script in <code>.claude/hooks/</code> declared in <code>.claude/settings.json</code>. It receives tool call data on stdin and can block, log, or notify.</p>
-        <p style="font-size:0.46em; color:var(--muted); line-height:1.5; margin:0;">Trigger events: <code>PreToolUse</code> · <code>PostToolUse</code> · <code>Stop</code> · <code>Notification</code></p>
+    <div style="text-align:center; margin-top:0.8em;">
+      <span class="bottom-note">You never configure these. They just work — and you can write your own.</span>
+    </div>
+    <aside class="notes">Three hooks ship with the template. Next slide shows how to write a custom one.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE — Write your own hook
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Write your own hook in 15 lines</h2>
+    <div style="display:grid; grid-template-columns:1fr 1.6fr; gap:0.8rem; margin-top:0.5em; align-items:start;">
+      <div>
+        <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.55em 0.8em; margin-bottom:0.6rem;">
+          <p style="font-size:0.56em; font-weight:700; color:var(--accent2); margin:0 0 0.2em;">How it works</p>
+          <ul style="margin:0;">
+            <li style="font-size:0.48em; padding:0.1em 0;">Python script in <code>.claude/hooks/</code></li>
+            <li style="font-size:0.48em; padding:0.1em 0;">Declared in <code>.claude/settings.json</code></li>
+            <li style="font-size:0.48em; padding:0.1em 0;">Receives tool call data on <code>stdin</code></li>
+            <li style="font-size:0.48em; padding:0.1em 0;">Exit 0 = allow · Exit 1 = block</li>
+          </ul>
+        </div>
+        <div class="col-box" style="border-top:3px solid var(--accent); padding:0.55em 0.8em;">
+          <p style="font-size:0.56em; font-weight:700; color:var(--accent); margin:0 0 0.2em;">Trigger events</p>
+          <ul style="margin:0;">
+            <li style="font-size:0.48em; padding:0.1em 0;"><code>PreToolUse</code> — before any action</li>
+            <li style="font-size:0.48em; padding:0.1em 0;"><code>PostToolUse</code> — after any action</li>
+            <li style="font-size:0.48em; padding:0.1em 0;"><code>Stop</code> — when session ends</li>
+            <li style="font-size:0.48em; padding:0.1em 0;"><code>Notification</code> — on alerts</li>
+          </ul>
+        </div>
       </div>
       <div>
-        <p style="font-size:0.44em; color:var(--muted); margin:0 0 0.2em;">Example — log word count after every thesis edit:</p>
-        <pre style="margin:0; box-shadow:none;"><code class="language-python" style="font-size:0.44em; line-height:1.45; padding:0.5em;"># .claude/hooks/word-count.py
+        <p style="font-size:0.46em; color:var(--muted); margin:0 0 0.25em;">Example — track word count every time Claude edits a thesis file:</p>
+        <pre style="margin:0; box-shadow:none;"><code class="language-python" style="font-size:0.46em; line-height:1.5; padding:0.6em;"># .claude/hooks/word-count.py  (PostToolUse)
 import sys, json, subprocess, datetime, pathlib
 
 data = json.load(sys.stdin)
@@ -1087,16 +1113,17 @@ tool = data.get("tool_name", "")
 path = data.get("tool_input", {}).get("file_path", "")
 
 if tool in ("Write", "Edit") and "thesis/" in path:
+    files = list(pathlib.Path("thesis").glob("*.md"))
     result = subprocess.run(
-        ["wc", "-w"] + list(pathlib.Path("thesis").glob("*.md")),
-        capture_output=True, text=True
+        ["wc", "-w"] + files, capture_output=True, text=True
     )
     total = result.stdout.strip().split("\n")[-1]
     with open(".claude/logs/word-count.log", "a") as f:
         f.write(f"{datetime.datetime.now():%Y-%m-%d %H:%M}  {total}\n")</code></pre>
+        <p style="font-size:0.42em; color:var(--muted); margin-top:0.3em;">After each writing session: <code>cat .claude/logs/word-count.log</code> to see your progress.</p>
       </div>
     </div>
-    <aside class="notes">Hooks are just Python scripts — any student comfortable with Python can write one. The word-count example is a good first hook: it's read-only, it gives useful feedback, and it teaches them how the hook receives tool data on stdin.</aside>
+    <aside class="notes">Hooks are just Python — any student comfortable with Python can write one in minutes. This example is read-only and safe: it never blocks Claude, just silently logs. Good first hook to assign as an exercise.</aside>
   </section>
 
   <!-- ─────────────────────────────────────────────────────────────
