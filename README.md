@@ -1,13 +1,83 @@
+# Master Thesis Template
 
-# Thesis Copilot
+A Claude Code template for master's thesis students. Provides AI-assisted writing, reference validation, empirical design guidance, and PDF compilation.
 
-A lightweight Claude Code setup for master students in finance.
+## Quick Start
 
-The goal is to help students:
-- define a research question,
-- structure a thesis,
-- review literature,
-- design empirical tests,
-- check data/code reproducibility,
-- draft thesis sections,
-- prepare supervisor updates.
+### 1. Prerequisites
+
+You need:
+- [Claude Code](https://claude.ai/code) — AI assistant CLI
+- [Python 3.8+](https://python.org) — for analysis scripts
+- [Pandoc](https://pandoc.org/installing.html) — for PDF compilation
+- [A LaTeX distribution](https://tug.org/texlive/) (TeX Live or MiKTeX) — for PDF compilation
+- [Git](https://git-scm.com)
+
+### 2. Clone and set up
+
+```bash
+git clone <your-repo-url>
+cd <repo-name>
+python setup.py
+```
+
+`setup.py` will check your prerequisites, create a Python virtual environment, and tell you what to install if anything is missing.
+
+### 3. Open in Claude Code
+
+```bash
+claude .
+```
+
+### 4. Run the interview
+
+Inside Claude Code, type:
+
+```
+/interview
+```
+
+This sets up your student profile, thesis proposal, and configures the AI assistant for your specific topic.
+
+## Available Skills
+
+| Skill | What it does |
+|---|---|
+| `/interview` | One-time setup: creates your student profile and proposal |
+| `/literature-review` | Maps literature streams and suggests search queries |
+| `/citation-search` | Returns search queries for a claim or topic |
+| `/validate-references` | Checks all citations against your .bib file and the web |
+| `/empirical-design` | Designs variables, regressions, and robustness checks |
+| `/write-section` | Drafts a thesis section from your notes |
+| `/adversarial-reviewer` | Simulates a tough examiner raising hard questions |
+| `/data-explorer` | Describes a dataset and flags data quality issues |
+| `/progress-check` | Reports which sections are done vs. placeholder |
+| `/compile` | Produces output/thesis.pdf from your Markdown files |
+| `/reproducibility-check` | Checks your project can be reproduced |
+
+## Writing your thesis
+
+Write in `thesis/*.md` files using standard Markdown. Cite with `[@key]` where `key` is a BibTeX key in `docs/references.bib`.
+
+Run `/compile` to produce a PDF.
+
+## Project structure
+
+```
+thesis/          ← write here (Markdown sections)
+code/            ← Python analysis scripts
+data/raw/        ← your raw data (never modified by Claude)
+data/clean/      ← processed data
+output/          ← tables, figures, compiled PDF
+docs/            ← generated docs (proposal, references, health report)
+```
+
+## Activating the Python environment
+
+```bash
+# macOS / Linux
+source .venv/bin/activate
+
+# Windows
+.venv\Scripts\activate
+```
