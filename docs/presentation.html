@@ -710,6 +710,51 @@ description: Draft a thesis section
   </section>
 
   <!-- ─────────────────────────────────────────────────────────────
+       SLIDE — Claude Code tools
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>How the agent perceives &amp; acts: its tools</h2>
+    <p style="font-size:0.52em; color:var(--muted); margin-bottom:0.5em;">Every action Claude takes goes through an explicit tool call — you can see and approve each one.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.6rem;">
+
+      <div class="col-box" style="border-top:3px solid var(--accent); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent); margin:0 0 0.25em; font-weight:600;">Read / Write / Edit</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Reads any file in your project. Writes new files. Makes targeted edits — not whole-file rewrites. You see exactly what changed.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent); margin:0 0 0.25em; font-weight:600;">Grep / Glob</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Searches file contents with regex (Grep) or finds files by name pattern (Glob). How Claude finds a function across 50 files instantly.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent); margin:0 0 0.25em; font-weight:600;">Bash</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Runs any shell command — compiles your PDF, runs Python scripts, checks git log. Requires your permission unless pre-approved in settings.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent2); margin:0 0 0.25em; font-weight:600;">WebFetch / WebSearch</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Fetches a URL or searches the web. Used by <code>/validate-references</code> to check papers exist on Semantic Scholar.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent2); margin:0 0 0.25em; font-weight:600;">Agent</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Spawns a sub-agent with its own context. How the <code>literature-reviewer</code> and <code>methods-reviewer</code> agents run independently, then report back.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent2); margin:0 0 0.25em; font-weight:600;">MCP tools</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Model Context Protocol — connects Claude to external services (Google Drive, Slack, databases). Extensible: you add the servers you need.</p>
+      </div>
+
+    </div>
+    <div style="margin-top:0.7em; text-align:center;">
+      <span class="bottom-note">Tools are explicit — Claude can't do anything silently. Every file read, every bash command, every web fetch is shown to you.</span>
+    </div>
+    <aside class="notes">The tool architecture is what makes agents safe to use. Nothing happens without a tool call. The permission model in settings.json controls which tools auto-approve and which require explicit confirmation.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
        SLIDE 6 — What's Inside
   ───────────────────────────────────────────────────────────────── -->
   <section data-auto-animate class="slide-what-inside">
@@ -946,6 +991,52 @@ existing work tends to...</code></pre>
       </span>
     </div>
     <aside class="notes">Agents are always-available specialists. Students don't need to think about when to use them — just describe what you want and Claude delegates automatically.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE — Adversarial reviewer
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>The hardest reviewer in the room costs nothing</h2>
+    <p style="font-size:0.58em; color:var(--muted); margin-bottom:0.6em;">
+      <code>/adversarial-reviewer</code> — simulates the 5 toughest questions an examiner would ask about your thesis
+    </p>
+    <div class="cols" style="margin-top:0.4em; gap:1rem; align-items:flex-start;">
+      <div style="flex:1.1;">
+        <div class="col-box" style="border-top:3px solid var(--red); padding:0.7em 0.9em; margin-bottom:0.6rem;">
+          <h3 style="font-size:0.65em; color:var(--red); margin-bottom:0.3em;">Why adversarial?</h3>
+          <ul style="margin:0;">
+            <li style="font-size:0.52em; padding:0.12em 0;">Confirmation bias is the biggest risk in self-review — you can't see your own blind spots</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">A friendly reviewer finds typos. An adversarial one finds the assumption your whole Chapter 5 depends on</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Better to hear it from Claude at midnight than from your committee at 10am</li>
+          </ul>
+        </div>
+        <div class="col-box" style="border-top:3px solid var(--orange); padding:0.7em 0.9em;">
+          <h3 style="font-size:0.65em; color:var(--orange); margin-bottom:0.3em;">What it attacks</h3>
+          <ul style="margin:0;">
+            <li style="font-size:0.52em; padding:0.12em 0;">Identification strategy — is causality actually established?</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Sample selection — who is excluded and why does it matter?</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Overclaiming — are conclusions supported by the evidence?</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Missing literature — what stream did you ignore?</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Robustness — does the result survive alternative specs?</li>
+          </ul>
+        </div>
+      </div>
+      <div style="flex:1;">
+        <div style="background:var(--bg2); border:1px solid var(--border); border-left:4px solid var(--red); border-radius:10px; padding:0.8em 1em;">
+          <p style="font-size:0.48em; font-family:'Fira Code',monospace; color:var(--muted); margin:0 0 0.5em;">Example output</p>
+          <p style="font-size:0.5em; color:var(--red); font-weight:600; margin:0 0 0.3em;">Q1 — Endogeneity</p>
+          <p style="font-size:0.48em; color:var(--text); line-height:1.5; margin:0 0 0.6em;">"Your instrument (distance to nearest exchange) is correlated with firm age in your own Table 2. This invalidates the exclusion restriction. How do you respond?"</p>
+          <p style="font-size:0.5em; color:var(--red); font-weight:600; margin:0 0 0.3em;">Q2 — Generalisability</p>
+          <p style="font-size:0.48em; color:var(--text); line-height:1.5; margin:0 0 0.6em;">"Your sample covers 2010–2015. Post-MiFID II microstructure changed substantially. Why should we believe the mechanism holds today?"</p>
+          <p style="font-size:0.46em; color:var(--muted); margin:0;">+ 3 more targeted questions</p>
+        </div>
+        <div style="margin-top:0.6em; text-align:center;">
+          <span class="pill" style="color:var(--red); border-color:var(--red);">Run it before every advisor meeting</span>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">The adversarial-reviewer is a separate agent that reads the whole thesis and plays the role of a tough examiner. It doesn't look for typos — it looks for the structural weaknesses that kill a viva. Students find this the most useful skill once they try it.</aside>
   </section>
 
   <!-- ─────────────────────────────────────────────────────────────
@@ -1292,6 +1383,24 @@ I have made the following progress...</code></pre>
         <div>
           <div class="resource-title">Agents SDK</div>
           <div class="resource-desc">Build multi-agent systems for research pipelines — data collection, cleaning, analysis, and validation running in parallel. <br/><span class="mono" style="color:var(--accent); font-size:0.85em;">anthropic.com/agents-sdk</span></div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">🐙</div>
+        <div>
+          <div class="resource-title">Git &amp; GitHub</div>
+          <div class="resource-desc">
+            Official Git reference: <a href="https://git-scm.com/doc" style="color:var(--accent);">git-scm.com/doc</a><br/>
+            GitHub Skills (interactive): <a href="https://skills.github.com" style="color:var(--accent);">skills.github.com</a><br/>
+            <span style="color:var(--muted); font-size:0.9em;">Pro Git book is free online — chapters 1–3 cover everything you need.</span>
+          </div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">🗂️</div>
+        <div>
+          <div class="resource-title">This template on GitHub</div>
+          <div class="resource-desc">Fork it, clone it, and push your own thesis. <br/><a href="https://github.com/jfimbett/master-thesis-template" style="color:var(--accent);">github.com/jfimbett/master-thesis-template</a></div>
         </div>
       </div>
     </div>
