@@ -81,3 +81,35 @@ source .venv/bin/activate
 # Windows
 .venv\Scripts\activate
 ```
+
+---
+
+## For the instructor
+
+This template is distributed as-is. Students clone it and run `python setup.py` followed by `/interview`.
+
+### Files to remove before distributing to students
+
+The following files are from the development phase and should be removed before distributing the template to students:
+
+- `thesis/proposal.md` — superseded by `docs/proposal.md` (created by `/interview`)
+- `thesis/literature_review.md` — superseded by `thesis/02_literature_review.md`
+- `thesis/methodology.md` — superseded by `thesis/05_methodology.md`
+- `thesis/data_dictionary.md` — moved to `docs/data_dictionary.md`
+- `.claude/hooks/log-action.sh` — replaced by `.claude/hooks/log-action.py`
+
+Delete these manually before pushing to GitHub as a template:
+
+```bash
+git rm thesis/proposal.md thesis/literature_review.md thesis/methodology.md thesis/data_dictionary.md
+git rm .claude/hooks/log-action.sh
+git commit -m "chore: remove superseded files before template distribution"
+```
+
+### Distributing the template
+
+1. Push to GitHub
+2. On GitHub: Settings → Template repository ✓
+3. Students use "Use this template" to create their own repo
+4. Each student then runs `python setup.py` and `/interview`
+```
