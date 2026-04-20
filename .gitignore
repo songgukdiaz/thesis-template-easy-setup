@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Data (raw data never committed)
+data/raw/
+!data/raw/.gitkeep
+
+# Generated outputs
+output/thesis.pdf
+
+# Claude logs
+.claude/logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Env files
+.env
