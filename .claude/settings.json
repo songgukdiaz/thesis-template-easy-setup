@@ -7,18 +7,56 @@
       "Edit(thesis/**)",
       "Edit(docs/**)",
       "Edit(output/**)",
+      "Edit(code/**)",
+      "Edit(pandoc/**)",
+      "Edit(CLAUDE.md)",
+      "Bash(python:*)",
+      "Bash(pandoc:*)",
+      "Bash(pip:*)",
+      "Bash(git:*)",
       "Bash(ls:*)",
-      "Bash(find:*)",
-      "Bash(cat:*)",
-      "Bash(grep:*)",
-      "Bash(python:*)"
+      "Bash(find:*)"
     ],
     "deny": [
       "Bash(rm:*)",
       "Bash(del:*)",
-      "Bash(curl:*)",
-      "Bash(wget:*)",
-      "Edit(data/raw/**)"
+      "Bash(rmdir:*)",
+      "Edit(data/raw/**)",
+      "Edit(setup.py)",
+      "Edit(.claude/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/protect-raw-data.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/log-action.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/notify.py"
+          }
+        ]
+      }
     ]
   }
 }
