@@ -564,7 +564,77 @@
   </section>
 
   <!-- ─────────────────────────────────────────────────────────────
-       SLIDE 4 — What's Inside
+       SLIDE 4 — LLMs vs AI Agents
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>LLMs vs AI Agents: what's the difference?</h2>
+    <div class="cols" style="margin-top:0.8em; gap:2em;">
+      <div class="col-box" style="border-top:3px solid var(--muted);">
+        <h3 style="color:var(--muted);">LLM</h3>
+        <p style="font-size:0.52em; color:var(--muted); margin:0.3em 0 0.8em;">Large Language Model</p>
+        <ul style="margin-top:0.4em;">
+          <li style="font-size:0.6em; padding:0.35em 0;">Predicts the next token given a prompt</li>
+          <li style="font-size:0.6em; padding:0.35em 0;">Stateless — no memory between calls</li>
+          <li style="font-size:0.6em; padding:0.35em 0;">No tools, no actions, text in → text out</li>
+          <li style="font-size:0.6em; padding:0.35em 0;">Examples: GPT-4, Claude, Gemini (the model itself)</li>
+        </ul>
+      </div>
+      <div style="display:flex;align-items:center;font-size:1.4em;color:var(--accent);font-weight:700;">→</div>
+      <div class="col-box" style="border-top:3px solid var(--accent);">
+        <h3>AI Agent</h3>
+        <p style="font-size:0.52em; color:var(--muted); margin:0.3em 0 0.8em;">LLM + tools + memory + planning</p>
+        <ul style="margin-top:0.4em;">
+          <li style="font-size:0.6em; padding:0.35em 0;"><strong>Perceives</strong> — reads your files, runs searches</li>
+          <li style="font-size:0.6em; padding:0.35em 0;"><strong>Plans</strong> — breaks a task into steps</li>
+          <li style="font-size:0.6em; padding:0.35em 0;"><strong>Acts</strong> — edits files, runs code, calls APIs</li>
+          <li style="font-size:0.6em; padding:0.35em 0;"><strong>Remembers</strong> — reads your CLAUDE.md every session</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:1.1em; text-align:center;">
+      <span class="bottom-note">Claude Code is an agent. The LLM is its brain — the agent is what acts on your project.</span>
+    </div>
+    <aside class="notes">The distinction matters: students who think of Claude as a chatbot will underuse it. It can read every file in the project, run Python, compile their PDF — not just answer questions.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 5 — What are Skills?
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Skills: instructions the agent follows</h2>
+    <div class="cols" style="margin-top:0.6em; gap:2em; align-items:flex-start;">
+      <div style="flex:1;">
+        <p style="font-size:0.6em; line-height:1.7; color:var(--text);">A skill is a <strong>Markdown file</strong> stored at<br><code>.claude/skills/&lt;name&gt;/SKILL.md</code></p>
+        <p style="font-size:0.6em; line-height:1.7; margin-top:0.6em;">When you type <code>/write-section</code>, Claude Code loads that file and follows the instructions inside — step by step, every time.</p>
+        <p style="font-size:0.6em; line-height:1.7; margin-top:0.6em;">Think of it as a <strong>recipe</strong>: you provide the ingredients (your notes), the skill provides the method.</p>
+        <div style="margin-top:1em; padding:0.6em 0.8em; background:var(--bg3); border-left:3px solid var(--accent2); border-radius:6px;">
+          <p style="font-size:0.52em; color:var(--muted); margin:0;">You can write your own skills.<br>Any <code>.claude/skills/yourskill/SKILL.md</code> becomes <code>/yourskill</code>.</p>
+        </div>
+      </div>
+      <div style="flex:1.2;">
+        <pre><code class="language-markdown" style="font-size:0.6em; line-height:1.55;">---
+name: write-section
+description: Draft a thesis section
+  from the student's notes.
+---
+
+## Process
+
+1. Read docs/student-profile.md
+2. Take the student's bullet notes
+3. Write in academic English
+4. Use cautious language:
+   "suggests", "consistent with"
+5. Never add citations not in notes
+6. Output clean Pandoc Markdown</code></pre>
+        <p style="font-size:0.48em; color:var(--muted); text-align:center; margin-top:0.4em;">Actual excerpt from .claude/skills/write-section/SKILL.md</p>
+      </div>
+    </div>
+    <aside class="notes">Skills are just text files — students can read them, copy them, and write their own. This demystifies AI tooling: it's not magic, it's structured instructions.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 6 — What's Inside
   ───────────────────────────────────────────────────────────────── -->
   <section data-auto-animate class="slide-what-inside">
     <h2>What you're getting</h2>
