@@ -55,6 +55,7 @@ This sets up your student profile, thesis proposal, and configures the AI assist
 | `/compile` | Produces output/thesis.pdf from your Markdown files |
 | `/reproducibility-check` | Checks your project can be reproduced |
 | `/advisor-report` | Generates an email-ready progress report for your advisor |
+| `/defense-slides` | Generates a populated Beamer presentation for your thesis defense |
 
 ## Writing your thesis
 
