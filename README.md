@@ -54,6 +54,7 @@ This sets up your student profile, thesis proposal, and configures the AI assist
 | `/progress-check` | Reports which sections are done vs. placeholder |
 | `/compile` | Produces output/thesis.pdf from your Markdown files |
 | `/reproducibility-check` | Checks your project can be reproduced |
+| `/advisor-report` | Generates an email-ready progress report for your advisor |
 
 ## Writing your thesis
 
@@ -81,6 +82,27 @@ source .venv/bin/activate
 # Windows
 .venv\Scripts\activate
 ```
+
+---
+
+## Git workflow
+
+Your thesis lives in a private GitHub repository. Set it up once:
+
+1. Create a new private repo on GitHub (github.com → New repository)
+2. Change the remote in this folder:
+   ```bash
+   git remote set-url origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+   git push -u origin main
+   ```
+3. Commit regularly as you write — at least after each work session
+4. Push before every advisor meeting so your advisor can see your progress
+5. Run `/advisor-report` to generate a progress email before each meeting
+
+### What to commit
+
+- Everything in `thesis/`, `code/`, `docs/`, `pandoc/`
+- Never commit `data/` (already excluded by `.gitignore`)
 
 ---
 

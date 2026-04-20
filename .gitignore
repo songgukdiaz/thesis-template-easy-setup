@@ -5,9 +5,11 @@ __pycache__/
 *.pyo
 .pytest_cache/
 
-# Data (raw data never committed)
+# Data (never commit datasets)
 data/raw/
 !data/raw/.gitkeep
+data/clean/
+!data/clean/.gitkeep
 
 # Generated outputs
 output/thesis.pdf
