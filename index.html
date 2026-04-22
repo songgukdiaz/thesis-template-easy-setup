@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Thesis, Supercharged with AI</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Reveal.js 4.6 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/black.css" id="theme" />
+
+  <!-- highlight.js — atom-one-dark -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+
+  <style>
+    /* ── Base variables ─────────────────────────────────────────── */
+    :root {
+      --bg:        #0d1117;
+      --bg2:       #161b22;
+      --bg3:       #21262d;
+      --border:    #30363d;
+      --text:      #e6edf3;
+      --muted:     #8b949e;
+      --accent:    #58a6ff;
+      --accent2:   #7c3aed;
+      --green:     #3fb950;
+      --red:       #f85149;
+      --yellow:    #d29922;
+      --orange:    #f0883e;
+    }
+
+    /* ── Reveal overrides ───────────────────────────────────────── */
+    .reveal-viewport { background: var(--bg); }
+    .reveal { font-family: 'Inter', sans-serif; font-size: 36px; color: var(--text); }
+    .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; font-weight: 700; color: var(--text); text-transform: none; letter-spacing: -0.02em; }
+    .reveal h1 { font-size: 2.4em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.5em; margin-bottom: 0.6em; }
+    .reveal h3 { font-size: 1.1em; color: var(--accent); }
+    .reveal p  { line-height: 1.5; }
+    .reveal ul { list-style: none; padding: 0; margin: 0; }
+    .reveal ul li { padding: 0.25em 0; }
+    .reveal ul li::before { content: "→ "; color: var(--accent); font-weight: 600; }
+    .reveal code { font-family: 'Fira Code', monospace; font-size: 0.82em; background: var(--bg3); padding: 0.15em 0.4em; border-radius: 4px; color: var(--accent); }
+    .reveal pre  { font-family: 'Fira Code', monospace; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); margin: 0.8em auto; }
+    .reveal pre code { font-size: 0.78em; line-height: 1.55; padding: 1.2em 1.4em; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; }
+    .reveal section { padding: 0 1.5rem; }
+    .reveal .slide-number { color: var(--muted); font-family: 'Fira Code', monospace; font-size: 0.55em; }
+    .reveal .progress bar { background: var(--accent); }
+    .reveal blockquote { background: var(--bg2); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 0.6em 1em; font-style: normal; color: var(--muted); font-size: 0.75em; }
+
+    /* ── Utility ────────────────────────────────────────────────── */
+    .accent  { color: var(--accent); }
+    .accent2 { color: var(--accent2); }
+    .green   { color: var(--green); }
+    .red     { color: var(--red); }
+    .muted   { color: var(--muted); font-size: 0.75em; }
+    .mono    { font-family: 'Fira Code', monospace; }
+    .big     { font-size: 1.15em; font-weight: 600; }
+
+    /* ── Pill / tag ─────────────────────────────────────────────── */
+    .pill {
+      display: inline-block;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.2em 0.8em;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.6em;
+      color: var(--accent);
+      margin: 0 0.2em;
+    }
+
+    /* ── Two-column layout ──────────────────────────────────────── */
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+      margin-top: 0.8rem;
+    }
+    .cols.three { grid-template-columns: 1fr 1fr 1fr; }
+    .col-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2em 1.4em;
+    }
+    .col-box h3 { margin-bottom: 0.5em; font-size: 0.85em; }
+
+    /* ── Skill card grid ────────────────────────────────────────── */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.45rem;
+      margin-top: 0.5rem;
+    }
+    .skill-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.4em 0.6em;
+      text-align: left;
+    }
+    .skill-card .skill-name {
+      font-family: 'Fira Code', monospace;
+      color: var(--accent);
+      font-size: 0.58em;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.18em;
+    }
+    .skill-card .skill-desc {
+      color: var(--muted);
+      font-size: 0.5em;
+      line-height: 1.35;
+    }
+
+    /* ── Agent cards ────────────────────────────────────────────── */
+    .agent-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--accent2);
+      border-radius: 10px;
+      padding: 1em 1.2em;
+    }
+    .agent-card h3 { color: var(--accent2); font-size: 0.8em; margin-bottom: 0.4em; }
+    .agent-card p  { color: var(--muted); font-size: 0.6em; line-height: 1.5; margin: 0; }
+
+    /* ── Hook items ─────────────────────────────────────────────── */
+    .hook-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1em;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.9em 1.2em;
+      margin-bottom: 0.6rem;
+    }
+    .hook-icon { font-size: 1.2em; flex-shrink: 0; margin-top: 0.1em; }
+    .hook-title { color: var(--text); font-weight: 600; font-size: 0.72em; }
+    .hook-desc  { color: var(--muted); font-size: 0.6em; line-height: 1.5; margin-top: 0.2em; }
+
+    /* ── Commit graph ───────────────────────────────────────────── */
+    .commit-graph {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 1rem auto;
+      width: fit-content;
+    }
+    .commit-dot {
+      width: 28px; height: 28px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+      flex-shrink: 0;
+      position: relative;
+    }
+    .commit-dot.main { background: var(--accent2); box-shadow: 0 0 0 2px var(--accent2); }
+    .commit-line {
+      height: 3px;
+      width: 80px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      flex-shrink: 0;
+    }
+    .commit-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.42em;
+      color: var(--muted);
+      text-align: center;
+      position: absolute;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    /* ── Workflow timeline ──────────────────────────────────────── */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+    .timeline-step {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.7em 0.8em;
+      text-align: left;
+    }
+    .timeline-step:nth-child(2) { border-top-color: var(--accent2); }
+    .timeline-step:nth-child(3) { border-top-color: var(--green); }
+    .timeline-step:nth-child(4) { border-top-color: var(--orange); }
+    .timeline-label {
+      font-size: 0.5em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.4em;
+    }
+    .timeline-step:nth-child(2) .timeline-label { color: var(--accent2); }
+    .timeline-step:nth-child(3) .timeline-label { color: var(--green); }
+    .timeline-step:nth-child(4) .timeline-label { color: var(--orange); }
+    .timeline-items { list-style: none; padding: 0; margin: 0; }
+    .timeline-items li { font-size: 0.54em; color: var(--muted); padding: 0.2em 0; line-height: 1.4; }
+    .timeline-items li::before { display: none; }
+    .timeline-items .cmd {
+      font-family: 'Fira Code', monospace;
+      color: var(--accent);
+      font-size: 0.9em;
+      background: var(--bg3);
+      padding: 0.1em 0.3em;
+      border-radius: 3px;
+    }
+
+    /* ── Contract / can-cannot ──────────────────────────────────── */
+    .contract-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.3rem; }
+    .contract-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 0.45em 0.7em; }
+    .contract-box.yes { border-top: 3px solid var(--green); }
+    .contract-box.no  { border-top: 3px solid var(--red); }
+    .contract-box h3  { font-size: 0.62em; margin-bottom: 0.2em; }
+    .contract-box.yes h3 { color: var(--green); }
+    .contract-box.no  h3 { color: var(--red); }
+    .contract-box ul li { font-size: 0.5em; color: var(--muted); padding: 0.06em 0; line-height: 1.3; }
+    .contract-box ul li::before { display: none; }
+    .contract-box.yes ul li::before { content: "✓ "; color: var(--green); display: inline; }
+    .contract-box.no  ul li::before { content: "✗ "; color: var(--red); display: inline; }
+
+    /* ── Resource cards ─────────────────────────────────────────── */
+    .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.8rem; }
+    .resource-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1em 1.2em;
+      display: flex;
+      gap: 0.8em;
+      align-items: flex-start;
+    }
+    .resource-icon { font-size: 1.4em; flex-shrink: 0; }
+    .resource-title { font-weight: 600; font-size: 0.7em; color: var(--text); margin-bottom: 0.25em; }
+    .resource-desc  { font-size: 0.56em; color: var(--muted); line-height: 1.4; }
+
+    /* ── Final slide ────────────────────────────────────────────── */
+    .start-steps {
+      display: inline-block;
+      text-align: left;
+      margin: 0.3em auto;
+    }
+    .start-step {
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      margin: 0.2em 0;
+    }
+    .step-num {
+      width: 24px; height: 24px;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.52em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-cmd {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.55em;
+      color: var(--text);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 0.25em 0.7em;
+      border-radius: 6px;
+    }
+
+    /* ── Title slide accents ────────────────────────────────────── */
+    .title-badge {
+      display: inline-block;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.25em 0.8em;
+      font-size: 0.55em;
+      color: var(--muted);
+      background: var(--bg2);
+      margin: 0.3em 0.2em;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Slide-specific tweaks ──────────────────────────────────── */
+    .slide-what-inside pre {
+      font-size: 0.68em;
+      text-align: left;
+      width: 90%;
+    }
+    .slide-what-inside .tagline {
+      font-size: 0.65em;
+      color: var(--muted);
+      margin-top: 0.4em;
+    }
+    .slide-what-inside .tagline code { font-size: 0.9em; }
+
+    /* Reveal fragment tweaks */
+    .reveal .fragment.highlight-accent { opacity: 1; }
+    .reveal .fragment.highlight-accent.visible { color: var(--accent); }
+
+    /* Divider line */
+    hr.accent-line {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0.8em 0;
+    }
+
+    /* Bottom note */
+    .bottom-note {
+      font-size: 0.58em;
+      color: var(--muted);
+      margin-top: 1em;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5em 1em;
+      display: inline-block;
+    }
+    .bottom-note code { font-size: 0.9em; }
+
+    /* ── Pipeline diagram (slide 12) ────────────────────────────── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: nowrap;
+      margin: 0.8em auto;
+    }
+    .pipeline-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6em 0.9em;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.5em;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+      min-width: 120px;
+    }
+    .pipeline-box.output {
+      border-color: var(--green);
+      color: var(--green);
+      font-weight: 600;
+    }
+    .pipeline-arrow {
+      color: var(--accent);
+      font-size: 1.2em;
+      padding: 0 0.3em;
+      flex-shrink: 0;
+    }
+
+    /* ── Numbered step layout (slide 13) ────────────────────────── */
+    .num-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 0.8rem;
+    }
+    .num-step {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1em 1.2em;
+    }
+    .num-step-label {
+      font-size: 0.52em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.5em;
+    }
+
+    /* ── First-day layout (slide 5) ─────────────────────────────── */
+    .first-day-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 0.8rem;
+      align-items: start;
+    }
+    .first-day-list {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1em 1.4em;
+    }
+    .first-day-list ol {
+      padding-left: 1.2em;
+      margin: 0;
+    }
+    .first-day-list ol li {
+      font-size: 0.58em;
+      color: var(--muted);
+      padding: 0.2em 0;
+      line-height: 1.4;
+    }
+    .first-day-list ol li::before { display: none; }
+    .first-day-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .first-day-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.55em 0.75em;
+    }
+    .first-day-card .fdc-file {
+      font-family: 'Fira Code', monospace;
+      color: var(--accent);
+      font-size: 0.58em;
+      font-weight: 500;
+    }
+    .first-day-card .fdc-desc {
+      color: var(--muted);
+      font-size: 0.52em;
+      line-height: 1.4;
+      margin-top: 0.2em;
+    }
+
+    /* ── Integrity rules (slide 19) ─────────────────────────────── */
+    .integrity-rule {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8em;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,200,50,0.2);
+      border-radius: 10px;
+      padding: 0.8em 1.1em;
+      margin-bottom: 0.6rem;
+    }
+    .integrity-icon { font-size: 1em; flex-shrink: 0; margin-top: 0.1em; }
+    .integrity-title { color: #e6d87a; font-weight: 700; font-size: 0.7em; }
+    .integrity-desc  { color: #c5b97a; font-size: 0.58em; line-height: 1.5; margin-top: 0.2em; }
+
+    /* ── Phase layout (defense prep slide 16) ───────────────────── */
+    .phase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 0.8rem;
+    }
+    .phase-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--accent);
+      border-radius: 10px;
+      padding: 1em 1.2em;
+    }
+    .phase-card:last-child { border-top-color: var(--accent2); }
+    .phase-cmd {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5em;
+    }
+    .phase-card:last-child .phase-cmd { color: var(--accent2); }
+    .phase-items { list-style: none; padding: 0; margin: 0; }
+    .phase-items li { font-size: 0.56em; color: var(--muted); padding: 0.2em 0; line-height: 1.4; }
+    .phase-items li::before { content: "→ "; color: var(--accent); }
+    .phase-card:last-child .phase-items li::before { color: var(--accent2); }
+  </style>
+</head>
+
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 1 — Title
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <div style="margin-top:0.3em;">
+      <p class="muted" style="letter-spacing:0.15em; text-transform:uppercase; font-size:0.55em; margin-bottom:1em;">Master in Finance · Barcelona School of Economics</p>
+      <h1><span class="gradient-text">Your Thesis,</span><br/>Supercharged with AI</h1>
+      <p style="font-size:0.65em; color:var(--muted); margin-top:0.6em; margin-bottom:1.4em;">
+        A practical guide to Claude Code&nbsp;&amp;&nbsp;your thesis template
+      </p>
+      <div>
+        <span class="title-badge">Juan F. Imbet</span>
+        <span class="title-badge">Master in Finance BSE</span>
+        <span class="title-badge">2026</span>
+      </div>
+      <div style="margin-top:1.2em;">
+        <a href="https://github.com/jfimbett/master-thesis-template" target="_blank"
+           style="display:inline-flex; align-items:center; gap:0.45em; text-decoration:none;
+                  color:var(--muted); font-family:'Fira Code',monospace; font-size:0.5em;
+                  background:var(--bg2); border:1px solid var(--border); border-radius:20px;
+                  padding:0.35em 0.9em; transition:color 0.2s;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+               fill="currentColor" aria-hidden="true" style="flex-shrink:0;">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385
+                     .6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41
+                     -.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23
+                     1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925
+                     0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23
+                     .96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23
+                     .66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925
+                     .435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57
+                     A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          github.com/jfimbett/master-thesis-template
+        </a>
+      </div>
+    </div>
+    <aside class="notes">Welcome everyone. Today we're covering a tool that will change how you work on your thesis. This is not about shortcuts — it's about working smarter at every stage.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 2 — Why AI matters now
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>This is a turning point</h2>
+    <ul style="margin-top: 0.5em;">
+      <li class="fragment" data-fragment-index="1" style="font-size:0.85em; padding: 0.45em 0;">
+        AI won't write your thesis — but it will make you <strong class="accent">10× faster</strong> at every step
+      </li>
+      <li class="fragment" data-fragment-index="2" style="font-size:0.85em; padding: 0.45em 0;">
+        The skill gap between students who use AI well and those who don't is <strong class="accent">growing fast</strong>
+      </li>
+      <li class="fragment" data-fragment-index="3" style="font-size:0.85em; padding: 0.45em 0;">
+        This template is your starting point — not a crutch, a <strong class="accent">scaffold</strong>
+      </li>
+    </ul>
+    <aside class="notes">Emphasise the word scaffold. AI doesn't replace their thinking — it removes friction around everything else: formatting, searching, drafting, compiling.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 3 — AI coding tools landscape
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>AI coding tools: the landscape</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; margin-top:0.6em;">
+
+      <div class="col-box" style="border-top:4px solid var(--accent); text-align:left;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.6em; color:var(--accent); font-weight:600; margin:0 0 0.3em;">Claude Code</p>
+        <p style="font-size:0.48em; color:var(--muted); margin:0 0 0.5em;">Anthropic · terminal / IDE</p>
+        <ul style="margin:0;">
+          <li style="font-size:0.52em; padding:0.2em 0;">Full project context (all files)</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Custom skills &amp; agents</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Runs code, edits files, compiles PDFs</li>
+          <li style="font-size:0.52em; padding:0.2em 0; color:var(--accent); font-weight:600;">← what we use</li>
+        </ul>
+      </div>
+
+      <div class="col-box" style="border-top:4px solid #6e40c9; text-align:left;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.6em; color:#a371f7; font-weight:600; margin:0 0 0.3em;">GitHub Copilot</p>
+        <p style="font-size:0.48em; color:var(--muted); margin:0 0 0.5em;">GitHub / Microsoft · IDE plugin</p>
+        <ul style="margin:0;">
+          <li style="font-size:0.52em; padding:0.2em 0;">Inline code suggestions as you type</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Chat in VS Code / JetBrains</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Great for code completion</li>
+          <li style="font-size:0.52em; padding:0.2em 0; color:var(--muted);">Less suited to long documents</li>
+        </ul>
+      </div>
+
+      <div class="col-box" style="border-top:4px solid var(--green); text-align:left;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.6em; color:var(--green); font-weight:600; margin:0 0 0.3em;">OpenAI Codex / ChatGPT</p>
+        <p style="font-size:0.48em; color:var(--muted); margin:0 0 0.5em;">OpenAI · web + API</p>
+        <ul style="margin:0;">
+          <li style="font-size:0.52em; padding:0.2em 0;">Conversational, broad knowledge</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Good for one-off questions</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">No persistent project context</li>
+          <li style="font-size:0.52em; padding:0.2em 0; color:var(--muted);">Manual copy-paste workflow</li>
+        </ul>
+      </div>
+
+      <div class="col-box" style="border-top:4px solid var(--orange); text-align:left;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.6em; color:var(--orange); font-weight:600; margin:0 0 0.3em;">Cursor</p>
+        <p style="font-size:0.48em; color:var(--muted); margin:0 0 0.5em;">Anysphere · VS Code fork</p>
+        <ul style="margin:0;">
+          <li style="font-size:0.52em; padding:0.2em 0;">AI-native IDE (VS Code base)</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Codebase-aware chat</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Strong for software projects</li>
+          <li style="font-size:0.52em; padding:0.2em 0; color:var(--muted);">No custom skill system</li>
+        </ul>
+      </div>
+
+      <div class="col-box" style="border-top:4px solid var(--yellow); text-align:left;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.6em; color:var(--yellow); font-weight:600; margin:0 0 0.3em;">Gemini CLI</p>
+        <p style="font-size:0.48em; color:var(--muted); margin:0 0 0.5em;">Google · terminal</p>
+        <ul style="margin:0;">
+          <li style="font-size:0.52em; padding:0.2em 0;">1M-token context window</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Free tier available</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Similar agentic loop to CC</li>
+          <li style="font-size:0.52em; padding:0.2em 0; color:var(--muted);">Smaller ecosystem</li>
+        </ul>
+      </div>
+
+      <div class="col-box" style="border-top:4px solid var(--red); text-align:left;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.6em; color:var(--red); font-weight:600; margin:0 0 0.3em;">Windsurf / Aider / etc.</p>
+        <p style="font-size:0.48em; color:var(--muted); margin:0 0 0.5em;">Various · IDE or terminal</p>
+        <ul style="margin:0;">
+          <li style="font-size:0.52em; padding:0.2em 0;">Growing fast, similar ideas</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Different UX, same core loop</li>
+          <li style="font-size:0.52em; padding:0.2em 0; color:var(--muted);">Skills transfer between tools</li>
+        </ul>
+      </div>
+
+    </div>
+    <aside class="notes">The tools are converging — they all work on the same principle: give the LLM your files and a loop to act on them. We chose Claude Code because the skill system lets us package the whole thesis workflow.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 4 — What is Claude Code?
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Claude Code: AI that lives in your project</h2>
+    <div class="cols" style="margin-top:0.6em;">
+      <div class="col-box">
+        <h3>What it is</h3>
+        <ul style="margin-top:0.5em;">
+          <li style="font-size:0.65em; padding:0.3em 0;">A command-line AI assistant</li>
+          <li style="font-size:0.65em; padding:0.3em 0;">Reads your entire project — thesis, code, data</li>
+          <li style="font-size:0.65em; padding:0.3em 0;">Follows custom instructions you write</li>
+          <li style="font-size:0.65em; padding:0.3em 0;">Executes tools: reads files, runs code, searches</li>
+        </ul>
+      </div>
+      <div class="col-box" style="border-color: var(--red); border-top: 3px solid var(--red);">
+        <h3 style="color:var(--red);">What it is NOT</h3>
+        <ul style="margin-top:0.5em;">
+          <li style="font-size:0.65em; padding:0.3em 0;">It doesn't know your field by default</li>
+          <li style="font-size:0.65em; padding:0.3em 0;">It can't invent papers or data</li>
+          <li style="font-size:0.65em; padding:0.3em 0;">It needs your thinking — it <em>amplifies</em> it</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:1.2em;">
+      <span class="bottom-note">You run it with: <code>claude .</code></span>
+    </div>
+    <aside class="notes">The key insight: Claude Code sees your whole project, not just a chat window. It reads CLAUDE.md for your custom rules, then acts on your codebase.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 4 — LLMs vs AI Agents
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>LLMs vs AI Agents: what's the difference?</h2>
+    <div class="cols" style="margin-top:0.8em; gap:1.2em; grid-template-columns:1fr auto 1fr;">
+      <div class="col-box" style="border-top:3px solid var(--muted);">
+        <h3 style="color:var(--muted);">LLM</h3>
+        <p style="font-size:0.52em; color:var(--muted); margin:0.3em 0 0.8em;">Large Language Model</p>
+        <ul style="margin-top:0.4em;">
+          <li style="font-size:0.6em; padding:0.35em 0;">Predicts the next token given a prompt</li>
+          <li style="font-size:0.6em; padding:0.35em 0;">Stateless — no memory between calls</li>
+          <li style="font-size:0.6em; padding:0.35em 0;">No tools, no actions, text in → text out</li>
+          <li style="font-size:0.6em; padding:0.35em 0;">Examples: GPT-4, Claude, Gemini (the model itself)</li>
+        </ul>
+      </div>
+      <div style="display:flex;align-items:center;font-size:1.4em;color:var(--accent);font-weight:700;">→</div>
+      <div class="col-box" style="border-top:3px solid var(--accent);">
+        <h3>AI Agent</h3>
+        <p style="font-size:0.52em; color:var(--muted); margin:0.3em 0 0.8em;">LLM + tools + memory + planning</p>
+        <ul style="margin-top:0.4em;">
+          <li style="font-size:0.6em; padding:0.35em 0;"><strong>Perceives</strong> — reads your files, runs searches</li>
+          <li style="font-size:0.6em; padding:0.35em 0;"><strong>Plans</strong> — breaks a task into steps</li>
+          <li style="font-size:0.6em; padding:0.35em 0;"><strong>Acts</strong> — edits files, runs code, calls APIs</li>
+          <li style="font-size:0.6em; padding:0.35em 0;"><strong>Remembers</strong> — reads your CLAUDE.md every session</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:1.1em; text-align:center;">
+      <span class="bottom-note">Claude Code is an agent. The LLM is its brain — the agent is what acts on your project.</span>
+    </div>
+    <aside class="notes">The distinction matters: students who think of Claude as a chatbot will underuse it. It can read every file in the project, run Python, compile their PDF — not just answer questions.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 5 — What are Skills?
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Skills: instructions the agent follows</h2>
+    <div class="cols" style="margin-top:0.6em; gap:2em; align-items:flex-start;">
+      <div style="flex:1;">
+        <p style="font-size:0.6em; line-height:1.7; color:var(--text);">A skill is a <strong>Markdown file</strong> stored at<br><code>.claude/skills/&lt;name&gt;/SKILL.md</code></p>
+        <p style="font-size:0.6em; line-height:1.7; margin-top:0.6em;">When you type <code>/write-section</code>, Claude Code loads that file and follows the instructions inside — step by step, every time.</p>
+        <p style="font-size:0.6em; line-height:1.7; margin-top:0.6em;">Think of it as a <strong>recipe</strong>: you provide the ingredients (your notes), the skill provides the method.</p>
+        <div style="margin-top:1em; padding:0.6em 0.8em; background:var(--bg3); border-left:3px solid var(--accent2); border-radius:6px;">
+          <p style="font-size:0.52em; color:var(--muted); margin:0;">You can write your own skills.<br>Any <code>.claude/skills/yourskill/SKILL.md</code> becomes <code>/yourskill</code>.</p>
+        </div>
+      </div>
+      <div style="flex:1.2;">
+        <pre><code class="language-markdown" style="font-size:0.6em; line-height:1.55;">---
+name: write-section
+description: Draft a thesis section
+  from the student's notes.
+---
+
+## Process
+
+1. Read docs/student-profile.md
+2. Take the student's bullet notes
+3. Write in academic English
+4. Use cautious language:
+   "suggests", "consistent with"
+5. Never add citations not in notes
+6. Output clean Pandoc Markdown</code></pre>
+        <p style="font-size:0.48em; color:var(--muted); text-align:center; margin-top:0.4em;">Actual excerpt from .claude/skills/write-section/SKILL.md</p>
+      </div>
+    </div>
+    <aside class="notes">Skills are just text files — students can read them, copy them, and write their own. This demystifies AI tooling: it's not magic, it's structured instructions.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE — Claude Code tools
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>How the agent perceives &amp; acts: its tools</h2>
+    <p style="font-size:0.52em; color:var(--muted); margin-bottom:0.5em;">Every action Claude takes goes through an explicit tool call — you can see and approve each one.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.6rem;">
+
+      <div class="col-box" style="border-top:3px solid var(--accent); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent); margin:0 0 0.25em; font-weight:600;">Read / Write / Edit</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Reads any file in your project. Writes new files. Makes targeted edits — not whole-file rewrites. You see exactly what changed.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent); margin:0 0 0.25em; font-weight:600;">Grep / Glob</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Searches file contents with regex (Grep) or finds files by name pattern (Glob). How Claude finds a function across 50 files instantly.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent); margin:0 0 0.25em; font-weight:600;">Bash</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Runs any shell command — compiles your PDF, runs Python scripts, checks git log. Requires your permission unless pre-approved in settings.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent2); margin:0 0 0.25em; font-weight:600;">WebFetch / WebSearch</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Fetches a URL or searches the web. Used by <code>/validate-references</code> to check papers exist on Semantic Scholar.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent2); margin:0 0 0.25em; font-weight:600;">Agent</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Spawns a sub-agent with its own context. How the <code>literature-reviewer</code> and <code>methods-reviewer</code> agents run independently, then report back.</p>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.6em 0.8em;">
+        <p style="font-family:'Fira Code',monospace; font-size:0.58em; color:var(--accent2); margin:0 0 0.25em; font-weight:600;">MCP tools</p>
+        <p style="font-size:0.5em; color:var(--muted); line-height:1.5; margin:0;">Model Context Protocol — connects Claude to external services (Google Drive, Slack, databases). Extensible: you add the servers you need.</p>
+      </div>
+
+    </div>
+    <div style="margin-top:0.7em; text-align:center;">
+      <span class="bottom-note">Tools are explicit — Claude can't do anything silently. Every file read, every bash command, every web fetch is shown to you.</span>
+    </div>
+    <aside class="notes">The tool architecture is what makes agents safe to use. Nothing happens without a tool call. The permission model in settings.json controls which tools auto-approve and which require explicit confirmation.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 6 — What's Inside
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate class="slide-what-inside">
+    <h2>What you're getting</h2>
+    <pre><code class="language-plaintext" style="font-size:0.72em; line-height:1.7;">thesis/          →  10 Markdown sections (intro through conclusion)
+code/            →  Python scripts  (load · clean · analyse · visualise)
+data/raw/        →  your raw data   (read-only, never modified)
+data/clean/      →  processed data
+output/          →  tables, figures, PDF
+docs/            →  profile, proposal, references, health report
+pandoc/          →  LaTeX template + metadata
+.claude/         →  skills, agents, hooks, settings</code></pre>
+    <p class="tagline fragment">
+      Run <code>python setup.py</code> once. Then <code>/interview</code>. Done.
+    </p>
+    <aside class="notes">The folder structure is opinionated on purpose. Every file has a place. The template enforces reproducibility by design, not by willpower.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 5 — Your First Day (NEW)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Day 1: <code>/interview</code> sets everything up</h2>
+    <div class="first-day-grid">
+      <div class="first-day-list">
+        <h3 style="font-size:0.7em; margin-bottom:0.6em;">The questions</h3>
+        <ol>
+          <li>Full name and program</li>
+          <li>University and department</li>
+          <li>Supervisor name (optional)</li>
+          <li>Thesis topic or working title</li>
+          <li style="color:var(--accent); font-weight:500;">Core research question → <em>refinement loop</em></li>
+          <li>Data you have or plan to use</li>
+          <li>Methodology you expect to apply</li>
+          <li>Programming experience: beginner / intermediate / advanced</li>
+          <li>Any language beyond Python?</li>
+        </ol>
+      </div>
+      <div class="first-day-cards">
+        <h3 style="font-size:0.7em; margin-bottom:0.4em;">What gets created</h3>
+        <div class="first-day-card">
+          <div class="fdc-file">📄 docs/student-profile.md</div>
+          <div class="fdc-desc">Your context, baked into every AI response</div>
+        </div>
+        <div class="first-day-card">
+          <div class="fdc-file">📋 docs/proposal.md</div>
+          <div class="fdc-desc">A structured concept note you can show your supervisor</div>
+        </div>
+        <div class="first-day-card">
+          <div class="fdc-file">⚙️ CLAUDE.md</div>
+          <div class="fdc-desc">Rewritten with your field, topic, and coding level</div>
+        </div>
+        <div class="first-day-card" style="border-left-color: var(--accent2);">
+          <div class="fdc-file" style="color:var(--accent2);">🔁 Refinement loop on Q5</div>
+          <div class="fdc-desc">Claude critiques your RQ against 4 criteria and iterates until it's specific, answerable, and falsifiable</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:0.8em;">
+      <span class="bottom-note">Run once. Every skill reads this forever. Your RQ comes out sharper.</span>
+    </div>
+    <aside class="notes">The interview now includes a research question refinement loop after Q5. Claude evaluates the RQ for specificity, answerability, contribution, and falsifiability, then offers a tighter version. Up to 3 rounds before moving on.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 6 — The Writing Experience (NEW)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>How <code>/write-section</code> actually works</h2>
+    <div class="cols three" style="margin-top:0.3em; gap:0.5rem; align-items:start;">
+      <div class="col-box" style="border-top:3px solid var(--accent); padding:0.4em 0.6em;">
+        <h3 style="font-size:0.55em; margin-bottom:0.2em;">You provide</h3>
+        <pre style="margin:0; box-shadow:none;"><code class="language-plaintext" style="font-size:0.48em; line-height:1.4; padding:0.45em;">/write-section Introduction
+
+- Topic: ESG ratings and
+  stock returns
+- Gap: rating disagreement
+  ignored
+- RQ: does disagreement
+  predict alpha?
+- Data: MSCI + Bloomberg,
+  2010–2023
+- Method: Fama-MacBeth
+  regression</code></pre>
+      </div>
+      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.4em 0.6em;">
+        <h3 style="font-size:0.55em; margin-bottom:0.2em;">Claude reads</h3>
+        <ul style="margin-top:0.15em;">
+          <li style="font-size:0.48em; padding:0.08em 0;">Your student profile</li>
+          <li style="font-size:0.48em; padding:0.08em 0;">Your notes above</li>
+          <li style="font-size:0.48em; padding:0.08em 0;">Academic tone rules</li>
+          <li style="font-size:0.48em; padding:0.08em 0;">No invented citations</li>
+        </ul>
+      </div>
+      <div class="col-box" style="border-top:3px solid var(--green); padding:0.4em 0.6em;">
+        <h3 style="font-size:0.55em; margin-bottom:0.2em;">You get</h3>
+        <pre style="margin:0; box-shadow:none;"><code class="language-markdown" style="font-size:0.46em; line-height:1.4; padding:0.45em;">## Introduction
+
+The relationship between
+environmental, social, and
+governance (ESG) ratings and
+equity returns has attracted
+considerable attention
+[@Berg2022]. However,
+existing work tends to...</code></pre>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:0.7em;">
+      <span class="bottom-note">Your ideas. Claude's prose. You review every word.</span>
+    </div>
+    <aside class="notes">The key point: Claude drafts from what the student supplies. Empty notes produce empty drafts. The quality of the output reflects the quality of the input.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 7 — Skills (was slide 5)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Skills: type <code>/name</code>, get results</h2>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <span class="skill-name">/interview</span>
+        <span class="skill-desc">Sets up your entire environment — profile, proposal, and custom rules</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/thesis-framing</span>
+        <span class="skill-desc">Turns a vague idea into a focused research question</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/literature-review</span>
+        <span class="skill-desc">Maps literature streams and suggests real search queries</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/write-section</span>
+        <span class="skill-desc">Drafts any section from your notes — never invents facts</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/empirical-design</span>
+        <span class="skill-desc">Designs variables, regressions, identification, and robustness checks</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/data-explorer</span>
+        <span class="skill-desc">Describes your dataset structure and flags data quality issues</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/validate-references</span>
+        <span class="skill-desc">Checks every citation is real — no hallucinated papers</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/adversarial-reviewer</span>
+        <span class="skill-desc">Simulates a tough examiner raising the 5 hardest questions</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/progress-check</span>
+        <span class="skill-desc">Shows which sections are substantive vs. empty placeholders</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/compile</span>
+        <span class="skill-desc">Produces <code>output/thesis.pdf</code> via Pandoc + XeLaTeX</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/advisor-report</span>
+        <span class="skill-desc">Generates an email-ready progress update for your supervisor</span>
+      </div>
+      <div class="skill-card">
+        <span class="skill-name">/defense-slides</span>
+        <span class="skill-desc">Creates a 16-slide Beamer presentation for your defense</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 8 — The Empirical Toolkit (NEW)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>For quantitative theses: two key skills</h2>
+    <div class="cols" style="margin-top:0.4em; gap:1rem;">
+      <div class="col-box" style="border-top:4px solid var(--accent); padding:0.7em 0.9em;">
+        <h3 style="font-size:0.72em; margin-bottom:0.3em;">Design your strategy</h3>
+        <p style="font-family:'Fira Code',monospace; font-size:0.56em; color:var(--accent); margin:0 0 0.4em;">/empirical-design</p>
+        <ul style="margin-top:0.2em;">
+          <li style="font-size:0.52em; padding:0.04em 0;">Defines your dependent + independent variables</li>
+          <li style="font-size:0.52em; padding:0.04em 0;">Writes your baseline regression in LaTeX</li>
+          <li style="font-size:0.52em; padding:0.04em 0;">Flags identification concerns</li>
+          <li style="font-size:0.52em; padding:0.04em 0;">Suggests robustness checks</li>
+          <li style="font-size:0.52em; padding:0.04em 0;">Produces expected tables and figures list</li>
+          <li style="font-size:0.52em; padding:0.04em 0;">Gives an interpretation guide</li>
+        </ul>
+        <div style="margin-top:0.5em;">
+          <span class="pill">Run before you touch any data</span>
+        </div>
+      </div>
+      <div class="col-box" style="border-top:4px solid var(--accent2); padding:0.7em 0.9em;">
+        <h3 style="font-size:0.72em; margin-bottom:0.3em;">Understand your data</h3>
+        <p style="font-family:'Fira Code',monospace; font-size:0.56em; color:var(--accent2); margin:0 0 0.4em;">/data-explorer</p>
+        <ul style="margin-top:0.2em;">
+          <li style="font-size:0.52em; padding:0.04em 0;">Schema: column names, types, missing value counts</li>
+          <li style="font-size:0.52em; padding:0.04em 0;">Data quality flags: duplicates, outliers, implausible values</li>
+          <li style="font-size:0.52em; padding:0.04em 0;">Suggested summary statistics for thesis section</li>
+          <li style="font-size:0.52em; padding:0.04em 0;">Python code stub for your analysis script</li>
+          <li style="font-size:0.52em; padding:0.04em 0;">Connection to your research question</li>
+        </ul>
+        <div style="margin-top:0.4em;">
+          <code style="font-size:0.52em;">/data-explorer data/clean/firm_panel.csv</code>
+        </div>
+        <div style="margin-top:0.4em;">
+          <span class="pill" style="color:var(--accent2); border-color:var(--accent2);">Run when data/clean/ has your file</span>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">These two skills are the entry points for any quantitative chapter. Empirical-design runs before data work; data-explorer runs once the clean dataset exists.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 9 — Agents (was slide 6)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Agents: specialists you can call in</h2>
+    <p style="font-size:0.6em; color:var(--muted); margin-bottom:0.8em;">
+      Skills = workflows you trigger. &nbsp;|&nbsp; Agents = specialist reviewers Claude can delegate to.
+    </p>
+    <div class="cols three">
+      <div class="agent-card">
+        <h3>literature-reviewer</h3>
+        <p>Checks your lit review isn't a list of summaries. Finds missing streams. Flags overclaiming and unsupported assertions.</p>
+      </div>
+      <div class="agent-card">
+        <h3>methods-reviewer</h3>
+        <p>Reviews your econometric strategy. Flags weak identification, missing controls, and standard error choices that won't pass a seminar.</p>
+      </div>
+      <div class="agent-card">
+        <h3>thesis-editor</h3>
+        <p>Edits any section for clarity and academic tone. Preserves your voice. Never adds facts. Never removes your argument.</p>
+      </div>
+    </div>
+    <div style="margin-top:1em;">
+      <span class="bottom-note">
+        Call them naturally: <code>"Review my literature review"</code> or <code>"Edit section 5 for clarity"</code>
+      </span>
+    </div>
+    <aside class="notes">Agents are always-available specialists. Students don't need to think about when to use them — just describe what you want and Claude delegates automatically.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE — Adversarial reviewer
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>The hardest reviewer in the room costs nothing</h2>
+    <p style="font-size:0.58em; color:var(--muted); margin-bottom:0.6em;">
+      <code>/adversarial-reviewer</code> — simulates the 5 toughest questions an examiner would ask about your thesis
+    </p>
+    <div class="cols" style="margin-top:0.4em; gap:1rem; align-items:flex-start;">
+      <div style="flex:1.1;">
+        <div class="col-box" style="border-top:3px solid var(--red); padding:0.7em 0.9em; margin-bottom:0.6rem;">
+          <h3 style="font-size:0.65em; color:var(--red); margin-bottom:0.3em;">Why adversarial?</h3>
+          <ul style="margin:0;">
+            <li style="font-size:0.52em; padding:0.12em 0;">Confirmation bias is the biggest risk in self-review — you can't see your own blind spots</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">A friendly reviewer finds typos. An adversarial one finds the assumption your whole Chapter 5 depends on</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Better to hear it from Claude at midnight than from your committee at 10am</li>
+          </ul>
+        </div>
+        <div class="col-box" style="border-top:3px solid var(--orange); padding:0.7em 0.9em;">
+          <h3 style="font-size:0.65em; color:var(--orange); margin-bottom:0.3em;">What it attacks</h3>
+          <ul style="margin:0;">
+            <li style="font-size:0.52em; padding:0.12em 0;">Identification strategy — is causality actually established?</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Sample selection — who is excluded and why does it matter?</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Overclaiming — are conclusions supported by the evidence?</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Missing literature — what stream did you ignore?</li>
+            <li style="font-size:0.52em; padding:0.12em 0;">Robustness — does the result survive alternative specs?</li>
+          </ul>
+        </div>
+      </div>
+      <div style="flex:1;">
+        <div style="background:var(--bg2); border:1px solid var(--border); border-left:4px solid var(--red); border-radius:10px; padding:0.8em 1em;">
+          <p style="font-size:0.48em; font-family:'Fira Code',monospace; color:var(--muted); margin:0 0 0.5em;">Example output</p>
+          <p style="font-size:0.5em; color:var(--red); font-weight:600; margin:0 0 0.3em;">Q1 — Endogeneity</p>
+          <p style="font-size:0.48em; color:var(--text); line-height:1.5; margin:0 0 0.6em;">"Your instrument (distance to nearest exchange) is correlated with firm age in your own Table 2. This invalidates the exclusion restriction. How do you respond?"</p>
+          <p style="font-size:0.5em; color:var(--red); font-weight:600; margin:0 0 0.3em;">Q2 — Generalisability</p>
+          <p style="font-size:0.48em; color:var(--text); line-height:1.5; margin:0 0 0.6em;">"Your sample covers 2010–2015. Post-MiFID II microstructure changed substantially. Why should we believe the mechanism holds today?"</p>
+          <p style="font-size:0.46em; color:var(--muted); margin:0;">+ 3 more targeted questions</p>
+        </div>
+        <div style="margin-top:0.6em; text-align:center;">
+          <span class="pill" style="color:var(--red); border-color:var(--red);">Run it before every advisor meeting</span>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">The adversarial-reviewer is a separate agent that reads the whole thesis and plays the role of a tough examiner. It doesn't look for typos — it looks for the structural weaknesses that kill a viva. Students find this the most useful skill once they try it.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 10 — Hooks (was slide 7)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Hooks: rules that run automatically</h2>
+    <div style="margin-top:0.6em;">
+      <div class="hook-item">
+        <div class="hook-icon">🛡️</div>
+        <div>
+          <div class="hook-title">protect-raw-data</div>
+          <div class="hook-desc">Fires before any file edit. If the target is <code>data/raw/</code>, it blocks the operation. Your raw data is physically untouchable — no matter what you type.</div>
+        </div>
+      </div>
+      <div class="hook-item">
+        <div class="hook-icon">📋</div>
+        <div>
+          <div class="hook-title">log-action</div>
+          <div class="hook-desc">After every tool use, appends a timestamped line to <code>.claude/logs/activity.log</code>. Full audit trail of everything Claude did during your session.</div>
+        </div>
+      </div>
+      <div class="hook-item">
+        <div class="hook-icon">🔔</div>
+        <div>
+          <div class="hook-title">notify</div>
+          <div class="hook-desc">When a long-running task (Pandoc compile, reference validation) finishes, sends a desktop notification. You can go make coffee.</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:0.8em;">
+      <span class="bottom-note">You never configure these. They just work — and you can write your own.</span>
+    </div>
+    <aside class="notes">Three hooks ship with the template. Next slide shows how to write a custom one.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE — Write your own hook
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Write your own hook in 15 lines</h2>
+    <div style="display:grid; grid-template-columns:1fr 1.6fr; gap:0.8rem; margin-top:0.5em; align-items:start;">
+      <div>
+        <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.55em 0.8em; margin-bottom:0.6rem;">
+          <p style="font-size:0.56em; font-weight:700; color:var(--accent2); margin:0 0 0.2em;">How it works</p>
+          <ul style="margin:0;">
+            <li style="font-size:0.48em; padding:0.1em 0;">Python script in <code>.claude/hooks/</code></li>
+            <li style="font-size:0.48em; padding:0.1em 0;">Declared in <code>.claude/settings.json</code></li>
+            <li style="font-size:0.48em; padding:0.1em 0;">Receives tool call data on <code>stdin</code></li>
+            <li style="font-size:0.48em; padding:0.1em 0;">Exit 0 = allow · Exit 1 = block</li>
+          </ul>
+        </div>
+        <div class="col-box" style="border-top:3px solid var(--accent); padding:0.55em 0.8em;">
+          <p style="font-size:0.56em; font-weight:700; color:var(--accent); margin:0 0 0.2em;">Trigger events</p>
+          <ul style="margin:0;">
+            <li style="font-size:0.48em; padding:0.1em 0;"><code>PreToolUse</code> — before any action</li>
+            <li style="font-size:0.48em; padding:0.1em 0;"><code>PostToolUse</code> — after any action</li>
+            <li style="font-size:0.48em; padding:0.1em 0;"><code>Stop</code> — when session ends</li>
+            <li style="font-size:0.48em; padding:0.1em 0;"><code>Notification</code> — on alerts</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:0.46em; color:var(--muted); margin:0 0 0.25em;">Example — track word count every time Claude edits a thesis file <span style="color:var(--accent);">(you can just ask Claude to write this for you)</span>:</p>
+        <pre style="margin:0; box-shadow:none;"><code class="language-python" style="font-size:0.46em; line-height:1.5; padding:0.6em;"># .claude/hooks/word-count.py  (PostToolUse)
+import sys, json, subprocess, datetime, pathlib
+
+data = json.load(sys.stdin)
+tool = data.get("tool_name", "")
+path = data.get("tool_input", {}).get("file_path", "")
+
+if tool in ("Write", "Edit") and "thesis/" in path:
+    files = list(pathlib.Path("thesis").glob("*.md"))
+    result = subprocess.run(
+        ["wc", "-w"] + files, capture_output=True, text=True
+    )
+    total = result.stdout.strip().split("\n")[-1]
+    with open(".claude/logs/word-count.log", "a") as f:
+        f.write(f"{datetime.datetime.now():%Y-%m-%d %H:%M}  {total}\n")</code></pre>
+        <p style="font-size:0.42em; color:var(--muted); margin-top:0.3em;">After each writing session: <code>cat .claude/logs/word-count.log</code> to see your progress.</p>
+      </div>
+    </div>
+    <aside class="notes">Hooks are just Python — any student comfortable with Python can write one in minutes. This example is read-only and safe: it never blocks Claude, just silently logs. Good first hook to assign as an exercise.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 11 — Git (was slide 8)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Git: never lose a word</h2>
+    <div class="cols" style="align-items:start; margin-top:0.5em; grid-template-columns:4fr 1fr;">
+      <div style="padding-left:2em;">
+        <h3 style="margin-bottom:0.4em; font-size:0.9em;">The 3 commands you actually need</h3>
+        <pre style="margin:0; overflow-x:auto;"><code class="language-bash" style="font-size:0.65em; line-height:1.65; padding:0.7em 1.1em; white-space:pre;">git add thesis/           # stage your changes
+git commit -m "draft intro"   # save a snapshot
+git push                  # back up to GitHub</code></pre>
+      </div>
+      <div>
+        <h3 style="margin-bottom:0.5em;">Why it matters</h3>
+        <ul>
+          <li style="font-size:0.65em; padding:0.3em 0;">Every commit is a restore point</li>
+          <li style="font-size:0.65em; padding:0.3em 0;">Your advisor can see progress before meetings</li>
+          <li style="font-size:0.65em; padding:0.3em 0;">Run <code>/advisor-report</code> to generate a progress email from your git history</li>
+        </ul>
+      </div>
+    </div>
+    <!-- CSS commit graph -->
+    <div style="margin-top:1.2em;">
+      <p style="font-size:0.52em; color:var(--muted); margin-bottom:0.5em; text-align:center;">Your commit history</p>
+      <div class="commit-graph">
+        <div class="commit-dot" style="position:relative;">
+          <span class="commit-label">init</span>
+        </div>
+        <div class="commit-line"></div>
+        <div class="commit-dot" style="position:relative;">
+          <span class="commit-label">add data</span>
+        </div>
+        <div class="commit-line"></div>
+        <div class="commit-dot" style="position:relative;">
+          <span class="commit-label">draft intro</span>
+        </div>
+        <div class="commit-line"></div>
+        <div class="commit-dot" style="position:relative;">
+          <span class="commit-label">lit review</span>
+        </div>
+        <div class="commit-line"></div>
+        <div class="commit-dot" style="position:relative;">
+          <span class="commit-label">results v1</span>
+        </div>
+        <div class="commit-line"></div>
+        <div class="commit-dot main" style="position:relative;">
+          <span class="commit-label">submit</span>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">Many students don't use version control. This template sets it up for them. The advisor-report skill reads git history to summarise progress automatically.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 12 — The Pandoc Pipeline (NEW)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Markdown → PDF: no LaTeX required</h2>
+    <div style="margin-top:0.8em;">
+      <div class="pipeline">
+        <div class="pipeline-box" style="min-width:266px;">
+          thesis/00_abstract.md<br/>
+          thesis/01_introduction.md<br/>
+          <span style="color:var(--muted);">... (10 files)</span>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-box">
+          pandoc/thesis.yaml<br/>
+          <span style="color:var(--muted); font-size:0.9em;">(title, author, supervisor…)</span>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-box">
+          pandoc/template.latex<br/>
+          <span style="color:var(--muted); font-size:0.9em;">(layout, fonts, margins)</span>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-box">
+          docs/references.bib<br/>
+          <span style="color:var(--muted); font-size:0.9em;">(your bibliography)</span>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-box output">
+          output/thesis.pdf ✓
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.55em; color:var(--muted); margin-top:0.4em;">You write Markdown. Pandoc handles the rest.</p>
+    <div class="cols" style="gap:1rem; margin-top:0.6em; align-items:center;">
+      <div style="text-align:right;">
+        <pre style="display:inline-block; margin:0;"><code class="language-bash" style="font-size:0.75em; padding:0.6em 1.2em;">/compile</code></pre>
+      </div>
+      <div>
+        <p style="font-size:0.65em; color:var(--muted); margin:0;">That's it. One command.</p>
+      </div>
+    </div>
+    <aside class="notes">Students write plain text files. The compile skill orchestrates Pandoc, handles bibliography sorting, and deposits a formatted PDF in output/. No manual LaTeX editing needed.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 13 — Reference Management (NEW)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Citations that actually work</h2>
+    <div class="num-steps">
+      <div class="num-step">
+        <div class="num-step-label">Step 1 — Write in Markdown</div>
+        <pre style="margin:0; box-shadow:none;"><code class="language-markdown" style="font-size:0.6em; padding:0.8em; line-height:1.5;">Recent work suggests a
+positive relationship
+[@Fama1993; @Berg2022].</code></pre>
+      </div>
+      <div class="num-step">
+        <div class="num-step-label">Step 2 — Add to references.bib</div>
+        <pre style="margin:0; box-shadow:none;"><code class="language-plaintext" style="font-size:0.56em; padding:0.8em; line-height:1.5;">@article{Fama1993,
+  author = {Fama, Eugene F.},
+  title  = {Common risk
+            factors...},
+  year   = {1993},
+  ...
+}</code></pre>
+      </div>
+      <div class="num-step">
+        <div class="num-step-label">Step 3 — Run /validate-references</div>
+        <div style="font-size:0.56em; line-height:1.7; margin-top:0.4em;">
+          <div style="color:var(--green);">✓ Confirmed via Semantic Scholar: 14 references</div>
+          <div style="color:var(--yellow);">⚠ Unverified (check manually): 2 references</div>
+          <div style="color:var(--red);">✗ Key in text but missing from .bib: 1 reference</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:0.9em;">
+      <span class="bottom-note">Never cite a paper you haven't read. <code>/validate-references</code> catches errors, not ethics.</span>
+    </div>
+    <aside class="notes">The validate-references skill checks every citation key against the .bib file and then attempts verification via Semantic Scholar. It reports but does not fix — the student must resolve each issue.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 14 — Daily workflow (was slide 9)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>A day in the life</h2>
+    <div class="timeline">
+      <div class="timeline-step">
+        <div class="timeline-label">Morning</div>
+        <ul class="timeline-items">
+          <li><span class="cmd">git pull</span></li>
+          <li><span class="cmd">/progress-check</span></li>
+          <li>Pick a section to work on</li>
+        </ul>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-label">Writing</div>
+        <ul class="timeline-items">
+          <li><span class="cmd">/write-section</span></li>
+          <li>Provide your notes</li>
+          <li>Review and edit the draft</li>
+          <li><span class="cmd">git commit</span></li>
+        </ul>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-label">Weekly</div>
+        <ul class="timeline-items">
+          <li><span class="cmd">/advisor-report</span></li>
+          <li>Email update to supervisor</li>
+          <li>Review open questions</li>
+        </ul>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-label">Before defense</div>
+        <ul class="timeline-items">
+          <li><span class="cmd">/adversarial-reviewer</span></li>
+          <li><span class="cmd">/defense-slides</span></li>
+          <li>Practice your answers</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">The workflow is intentionally simple. Students should spend their time thinking and writing — not fighting tooling. This cadence keeps the advisor loop tight.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 15 — Before Your Advisor Meeting (NEW)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Before every meeting: two commands</h2>
+    <div class="cols" style="margin-top:0.6em; gap:1.5rem;">
+      <div class="col-box" style="border-top:4px solid var(--accent);">
+        <h3 style="font-size:0.72em; margin-bottom:0.5em;">1. Push your work</h3>
+        <pre style="margin:0; box-shadow:none;"><code class="language-bash" style="font-size:0.64em; padding:0.9em;">git add thesis/
+git commit -m "update methodology draft"
+git push</code></pre>
+        <p style="font-size:0.56em; color:var(--muted); margin-top:0.5em; margin-bottom:0;">Your advisor can see your files on GitHub</p>
+      </div>
+      <div class="col-box" style="border-top:4px solid var(--accent2);">
+        <h3 style="font-size:0.72em; margin-bottom:0.5em;">2. Generate a progress report</h3>
+        <p style="font-family:'Fira Code',monospace; font-size:0.6em; color:var(--accent2); margin-bottom:0.5em;">/advisor-report 2026-03-15</p>
+        <ul style="margin-bottom:0.5em;">
+          <li style="font-size:0.52em; padding:0.2em 0;">Reads your git history since the date</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Reads all 10 thesis sections</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Classifies each as substantive or empty</li>
+          <li style="font-size:0.52em; padding:0.2em 0;">Writes an email-ready report to docs/advisor-report.md</li>
+        </ul>
+        <pre style="margin:0; box-shadow:none;"><code class="language-plaintext" style="font-size:0.52em; padding:0.7em; line-height:1.5;">Subject: Thesis Progress Update — Jana Smith
+
+Dear Prof. Müller,
+
+Since our last meeting on 2026-03-15,
+I have made the following progress...</code></pre>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:0.7em;">
+      <span class="bottom-note">Review before sending. It reflects only what's actually written.</span>
+    </div>
+    <aside class="notes">The advisor-report skill is intentionally evidence-based: it only reports on sections that contain real content, not placeholders. Students should review it before forwarding.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 16 — Defense Prep (NEW)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Getting ready to defend</h2>
+    <div class="phase-grid">
+      <div class="phase-card">
+        <div class="phase-cmd">/adversarial-reviewer</div>
+        <p style="font-size:0.58em; color:var(--muted); margin-bottom:0.5em; font-weight:600;">Stress-test your thesis</p>
+        <ul class="phase-items">
+          <li>Simulates a tough examiner</li>
+          <li>Raises the 5 hardest questions your thesis invites</li>
+          <li>Flags specific overclaiming sentences</li>
+          <li>Gives you time to prepare answers before the real thing</li>
+        </ul>
+        <blockquote style="margin-top:0.6em; font-size:0.52em;">
+          "Your identification strategy relies on the assumption that [X]. What evidence do you have that this holds in your sample?"
+        </blockquote>
+      </div>
+      <div class="phase-card">
+        <div class="phase-cmd">/defense-slides</div>
+        <p style="font-size:0.58em; color:var(--muted); margin-bottom:0.5em; font-weight:600;">Build your slides</p>
+        <ul class="phase-items">
+          <li>Reads all 10 thesis sections</li>
+          <li>Generates a 16-slide Beamer presentation</li>
+          <li>Populated with your actual content</li>
+          <li>Compiles to output/defense.pdf</li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:0.8em;">
+      <span class="bottom-note">You still practice. But you start from something real.</span>
+    </div>
+    <aside class="notes">These two skills are designed to be run together in the final weeks. The adversarial reviewer finds the gaps; the defense slides give the student a starting deck to iterate on.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 17 — The contract (was slide 10)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>The contract</h2>
+    <div class="contract-grid">
+      <div class="contract-box yes">
+        <h3>AI CAN</h3>
+        <ul>
+          <li>Draft sections from your notes</li>
+          <li>Suggest search queries — never invent papers</li>
+          <li>Check your methodology for common errors</li>
+          <li>Compile your PDF automatically</li>
+          <li>Tell you hard questions your examiner will ask</li>
+        </ul>
+      </div>
+      <div class="contract-box no">
+        <h3>AI CANNOT</h3>
+        <ul>
+          <li>Invent data or empirical results</li>
+          <li>Write your thesis without your thinking</li>
+          <li>Replace your judgment on your topic</li>
+          <li>Know what your professor wants unless you tell it</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">This slide is the most important one. Print it. Put it above your desk. The moment students try to make AI think for them, the output collapses in quality.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE — Setup resources (links)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Setup: everything you need to get started</h2>
+    <p style="font-size:0.5em; color:var(--muted); margin-bottom:0.5em;">Click any link — all documentation is official and free.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem;">
+
+      <div class="col-box" style="border-top:3px solid var(--accent); padding:0.3em 0.55em;">
+        <p style="font-size:0.52em; font-weight:700; margin:0 0 0.08em;">Git</p>
+        <p style="font-size:0.42em; color:var(--muted); margin:0 0 0.1em;">Version control — tracks every change to your thesis</p>
+        <a href="https://git-scm.com/downloads" style="font-size:0.42em; color:var(--accent);">git-scm.com/downloads</a> &nbsp;·&nbsp;
+        <a href="https://git-scm.com/book/en/v2" style="font-size:0.42em; color:var(--accent);">Pro Git book (free)</a>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent); padding:0.3em 0.55em;">
+        <p style="font-size:0.52em; font-weight:700; margin:0 0 0.08em;">GitHub CLI <code style="font-size:0.85em;">gh</code></p>
+        <p style="font-size:0.42em; color:var(--muted); margin:0 0 0.1em;">Manage repos and pull requests from the terminal</p>
+        <a href="https://cli.github.com/" style="font-size:0.42em; color:var(--accent);">cli.github.com</a> &nbsp;·&nbsp;
+        <a href="https://cli.github.com/manual/" style="font-size:0.42em; color:var(--accent);">Manual</a>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--green); padding:0.3em 0.55em;">
+        <p style="font-size:0.52em; font-weight:700; margin:0 0 0.08em;">Python — Anaconda</p>
+        <p style="font-size:0.42em; color:var(--muted); margin:0 0 0.1em;">Python distribution with data science packages pre-installed</p>
+        <a href="https://www.anaconda.com/download" style="font-size:0.42em; color:var(--accent);">anaconda.com/download</a> &nbsp;·&nbsp;
+        <a href="https://docs.anaconda.com/getting-started/" style="font-size:0.42em; color:var(--accent);">Getting started</a>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--green); padding:0.3em 0.55em;">
+        <p style="font-size:0.52em; font-weight:700; margin:0 0 0.08em;">VS Code</p>
+        <p style="font-size:0.42em; color:var(--muted); margin:0 0 0.1em;">Editor — Claude Code integrates directly as an extension</p>
+        <a href="https://code.visualstudio.com/" style="font-size:0.42em; color:var(--accent);">code.visualstudio.com</a> &nbsp;·&nbsp;
+        <a href="https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code" style="font-size:0.42em; color:var(--accent);">Claude Code extension</a>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.3em 0.55em;">
+        <p style="font-size:0.52em; font-weight:700; margin:0 0 0.08em;">Claude Code — install &amp; quickstart</p>
+        <p style="font-size:0.42em; color:var(--muted); margin:0 0 0.1em;"><code>npm install -g @anthropic-ai/claude-code</code> · then <code>claude .</code> in any folder</p>
+        <a href="https://docs.anthropic.com/en/docs/claude-code/quickstart" style="font-size:0.42em; color:var(--accent);">Quickstart guide</a> &nbsp;·&nbsp;
+        <a href="https://docs.anthropic.com/en/docs/claude-code/overview" style="font-size:0.42em; color:var(--accent);">Full docs</a>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--accent2); padding:0.3em 0.55em;">
+        <p style="font-size:0.52em; font-weight:700; margin:0 0 0.08em;">Anthropic API key</p>
+        <p style="font-size:0.42em; color:var(--muted); margin:0 0 0.1em;">Create a key at console.anthropic.com, then <code>export ANTHROPIC_API_KEY=sk-...</code></p>
+        <a href="https://console.anthropic.com/" style="font-size:0.42em; color:var(--accent);">console.anthropic.com</a> &nbsp;·&nbsp;
+        <a href="https://docs.anthropic.com/en/api/getting-started" style="font-size:0.42em; color:var(--accent);">API getting started</a>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--orange); padding:0.3em 0.55em; grid-column:1 / -1;">
+        <p style="font-size:0.52em; font-weight:700; margin:0 0 0.08em;">LaTeX engine <span style="font-size:0.75em; color:var(--muted); font-weight:400;">(required for <code>/compile</code> and <code>/defense-slides</code> — not installed by setup.py)</span></p>
+        <p style="font-size:0.42em; color:var(--muted); margin:0 0 0.1em;">Install once manually before running <code>/compile</code>. setup.py will detect it and print instructions if it's missing.</p>
+        <a href="https://miktex.org/download" style="font-size:0.42em; color:var(--accent);">MiKTeX (Windows)</a> &nbsp;·&nbsp;
+        <a href="https://tug.org/texlive/" style="font-size:0.42em; color:var(--accent);">TeX Live (Linux)</a> &nbsp;·&nbsp;
+        <a href="https://www.tug.org/mactex/" style="font-size:0.42em; color:var(--accent);">MacTeX (macOS)</a>
+      </div>
+
+      <div class="col-box" style="border-top:3px solid var(--yellow); padding:0.3em 0.55em; grid-column:1 / -1;">
+        <p style="font-size:0.52em; font-weight:700; margin:0 0 0.08em;">Run Claude Code with a local LLM <span style="font-size:0.75em; color:var(--muted); font-weight:400;">(if API cost or privacy is a concern)</span></p>
+        <p style="font-size:0.42em; color:var(--muted); margin:0 0 0.1em;">Claude Code supports custom API endpoints — point it at Ollama, LM Studio, or any OpenAI-compatible server running locally.</p>
+        <a href="https://docs.anthropic.com/en/docs/claude-code/bedrock-vertex" style="font-size:0.42em; color:var(--accent);">Bedrock &amp; Vertex AI</a> &nbsp;·&nbsp;
+        <a href="https://docs.anthropic.com/en/docs/claude-code/settings#environment-variables" style="font-size:0.42em; color:var(--accent);">Custom endpoint (ANTHROPIC_BASE_URL)</a> &nbsp;·&nbsp;
+        <a href="https://ollama.com/" style="font-size:0.42em; color:var(--accent);">Ollama (run models locally)</a>
+      </div>
+
+    </div>
+    <aside class="notes">This is a reference slide — leave it on screen while students set up. The local LLM option is useful for students who have privacy concerns or want to avoid API costs, though quality will be lower than Claude.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 18 — Going deeper (was slide 11)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2>Going deeper</h2>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <div class="resource-icon">📚</div>
+        <div>
+          <div class="resource-title">Claude Code docs</div>
+          <div class="resource-desc">Learn the full capability set — MCP tools, agent orchestration, sub-agents, and the permissions model. <br/><span class="mono" style="color:var(--accent); font-size:0.85em;">docs.anthropic.com/claude-code</span></div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">🔧</div>
+        <div>
+          <div class="resource-title">Customize your template</div>
+          <div class="resource-desc">Edit <code>CLAUDE.md</code> to add field-specific rules, forbidden words, citation norms, or your supervisor's preferences. Your rules override defaults.</div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">🧪</div>
+        <div>
+          <div class="resource-title">Write your own skills</div>
+          <div class="resource-desc">Create <code>.claude/skills/myskill/SKILL.md</code> with a prompt. Call it with <code>/myskill</code>. Share useful skills with your cohort.</div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">🤝</div>
+        <div>
+          <div class="resource-title">Agents SDK</div>
+          <div class="resource-desc">Build multi-agent systems for research pipelines — data collection, cleaning, analysis, and validation running in parallel. <br/><span class="mono" style="color:var(--accent); font-size:0.85em;">anthropic.com/agents-sdk</span></div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">🐙</div>
+        <div>
+          <div class="resource-title">Git &amp; GitHub</div>
+          <div class="resource-desc">
+            Official Git reference: <a href="https://git-scm.com/doc" style="color:var(--accent);">git-scm.com/doc</a><br/>
+            GitHub Skills (interactive): <a href="https://skills.github.com" style="color:var(--accent);">skills.github.com</a><br/>
+            <span style="color:var(--muted); font-size:0.9em;">Pro Git book is free online — chapters 1–3 cover everything you need.</span>
+          </div>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-icon">🗂️</div>
+        <div>
+          <div class="resource-title">This template on GitHub</div>
+          <div class="resource-desc">Fork it, clone it, and push your own thesis. <br/><a href="https://github.com/jfimbett/master-thesis-template" style="color:var(--accent);">github.com/jfimbett/master-thesis-template</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 19 — Academic Integrity (NEW)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate data-background-color="#1a1200">
+    <h2 style="color:#e6d87a;">AI + integrity: the line is clear</h2>
+    <div style="margin-top:0.7em;">
+      <div class="integrity-rule">
+        <div class="integrity-icon">🔵</div>
+        <div>
+          <div class="integrity-title">Your thinking is the thesis</div>
+          <div class="integrity-desc">Claude drafts from your notes. If the notes are empty, the draft is empty. The ideas must be yours.</div>
+        </div>
+      </div>
+      <div class="integrity-rule">
+        <div class="integrity-icon">🔵</div>
+        <div>
+          <div class="integrity-title">Every citation must be real</div>
+          <div class="integrity-desc">Claude will never invent a paper. <code style="background:rgba(255,255,255,0.08); color:#e6d87a;">/validate-references</code> checks against Semantic Scholar. If a citation isn't in your .bib, it won't compile. You are still responsible for reading what you cite.</div>
+        </div>
+      </div>
+      <div class="integrity-rule">
+        <div class="integrity-icon">🔵</div>
+        <div>
+          <div class="integrity-title">Disclose how you used AI</div>
+          <div class="integrity-desc">Many programs now require an AI use statement. Ask your supervisor. The log at <code style="background:rgba(255,255,255,0.08); color:#e6d87a;">.claude/logs/activity.log</code> is your audit trail.</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:0.8em;">
+      <span class="bottom-note" style="background:rgba(255,255,255,0.05); border-color:rgba(255,200,50,0.25); color:#c5b97a;">
+        Using AI to write faster is fine. Using AI to think for you is not.
+      </span>
+    </div>
+    <aside class="notes">This slide addresses the question every student is thinking but not asking. Be direct: the audit log exists, disclosure requirements are growing, and there is no AI shortcut that replaces understanding your own research.</aside>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SLIDE 20 — Final (was slide 12)
+  ───────────────────────────────────────────────────────────────── -->
+  <section data-auto-animate>
+    <h2 style="font-size:2em; margin-bottom:0.6em;"><span class="gradient-text">Start now.</span></h2>
+    <div class="start-steps">
+      <div class="start-step">
+        <div class="step-num">1</div>
+        <div class="step-cmd">git clone https://github.com/jfimbett/master-thesis-template.git</div>
+      </div>
+      <div class="start-step">
+        <div class="step-num">2</div>
+        <div class="step-cmd">cd master-thesis-template</div>
+      </div>
+      <div class="start-step">
+        <div class="step-num">3</div>
+        <div class="step-cmd" style="font-size:0.85em;">git remote set-url origin https://github.com/YOUR_USERNAME/YOUR_REPO.git</div>
+        <div style="font-size:0.38em; color:var(--muted); margin-top:0.2em; padding-left:0.2em;">create a new private repo on github.com first, then paste its URL here</div>
+      </div>
+      <div class="start-step">
+        <div class="step-num">4</div>
+        <div class="step-cmd">python setup.py</div>
+      </div>
+      <div class="start-step">
+        <div class="step-num">5</div>
+        <div class="step-cmd">claude .</div>
+      </div>
+      <div class="start-step">
+        <div class="step-num">6</div>
+        <div class="step-cmd">/interview</div>
+      </div>
+    </div>
+    <hr class="accent-line" style="margin-top:1.2em; width:60%; margin-left:auto; margin-right:auto;"/>
+    <p style="font-size:0.9em; color:var(--muted); margin-top:0.7em; font-weight:500;">
+      Your thesis starts today.
+    </p>
+    <aside class="notes">End on a call to action. The repo URL is on the course portal. If students run into issues with setup, tell them to run /interview and follow the prompts — it handles everything.</aside>
+  </section>
+
+</div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+<!-- Reveal.js core -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<!-- highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<!-- Reveal.js highlight plugin -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/highlight.js"></script>
+<!-- Reveal.js notes plugin -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    progress: true,
+    transition: 'convex',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    width: 1280,
+    height: 720,
+    margin: 0.06,
+    minScale: 0.2,
+    maxScale: 2.0,
+    controls: true,
+    controlsTutorial: false,
+    overview: true,
+    fragments: true,
+    plugins: [ RevealHighlight, RevealNotes ],
+    highlight: {
+      highlightOnLoad: true,
+      beforeHighlight: (hljs) => {
+        hljs.configure({ languages: ['bash', 'plaintext'] });
+      }
+    }
+  });
+</script>
+</body>
+</html>

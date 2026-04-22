@@ -1,0 +1,24 @@
+# Pandoc thesis metadata
+# This file is populated by /interview. Edit manually after running /interview.
+
+title: "Working Title — Replace After /interview"
+author: "Student Name"
+date: "2024"
+
+# Thesis-specific fields (used in template.latex title page)
+supervisor: ""
+university: ""
+program: ""
+
+# Bibliography
+bibliography: docs/references.bib
+csl: ""
+
+# PDF settings
+geometry: "margin=2.5cm"
+fontsize: 12pt
+linestretch: 1.5
+toc: true
+toc-depth: 3
+numbersections: true
+top-level-division: chapter

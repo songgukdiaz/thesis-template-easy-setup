@@ -1,0 +1,111 @@
+\documentclass[$fontsize$,a4paper]{report}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage[margin=$if(geometry)$$geometry$$else$2.5cm$endif$]{geometry}
+\usepackage{setspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{microtype}
+
+% ── Font ──────────────────────────────────────────────────────────────────────
+\setmainfont{Georgia}[
+  BoldFont = Georgia Bold,
+  ItalicFont = Georgia Italic,
+  BoldItalicFont = Georgia Bold Italic
+]
+
+% ── Line spacing ──────────────────────────────────────────────────────────────
+$if(linestretch)$
+\setstretch{$linestretch$}
+$else$
+\setstretch{1.5}
+$endif$
+
+% ── Pandoc boilerplate ────────────────────────────────────────────────────────
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+% ── Headers ───────────────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{$if(title)$$title$$endif$}}
+\fancyhead[R]{\small\textit{$if(author)$$author$$endif$}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Chapter formatting ────────────────────────────────────────────────────────
+\titleformat{\chapter}[hang]{\Large\bfseries}{\thechapter.}{1em}{}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title page ────────────────────────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+
+  $if(university)$
+  {\large $university$}\\[0.5cm]
+  $endif$
+
+  $if(program)$
+  {\normalsize $program$}\\[2cm]
+  $endif$
+
+  \rule{\linewidth}{0.5mm}\\[0.4cm]
+  {\Huge\bfseries $if(title)$$title$$else$Master Thesis$endif$}\\[0.4cm]
+  \rule{\linewidth}{0.5mm}\\[2cm]
+
+  {\large\textit{Author}}\\[0.3cm]
+  {\Large $if(author)$$author$$else$Student Name$endif$}\\[1.5cm]
+
+  $if(supervisor)$
+  {\large\textit{Supervisor}}\\[0.3cm]
+  {\Large $supervisor$}\\[1.5cm]
+  $endif$
+
+  \vfill
+
+  {\large $if(date)$$date$$else$\today$endif$}
+\end{titlepage}
+
+% ── Front matter ──────────────────────────────────────────────────────────────
+\pagenumbering{roman}
+
+$for(include-before)$
+$include-before$
+$endfor$
+
+$if(toc)$
+\tableofcontents
+\clearpage
+$endif$
+
+% ── Main content ──────────────────────────────────────────────────────────────
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+$body$
+
+% ── Bibliography ──────────────────────────────────────────────────────────────
+$if(bibliography)$
+\clearpage
+$endif$
+
+$for(include-after)$
+$include-after$
+$endfor$
+
+\end{document}
