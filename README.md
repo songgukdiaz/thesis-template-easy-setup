@@ -7,11 +7,24 @@ A Claude Code template for master's thesis students. Provides AI-assisted writin
 ### 1. Prerequisites
 
 You need:
-- [Claude Code](https://claude.ai/code) — AI assistant CLI
+- [Claude Code](https://claude.ai/code) — AI assistant (available as CLI, desktop app, or web app)
 - [Python 3.8+](https://python.org) — for analysis scripts
 - [Pandoc](https://pandoc.org/installing.html) — for PDF compilation
 - [A LaTeX distribution](https://tug.org/texlive/) (TeX Live or MiKTeX) — for PDF compilation
 - [Git](https://git-scm.com)
+
+> **Don't want to install these manually?** If you have [Claude Desktop](https://claude.ai/download), the setup skills below will install everything for you automatically.
+
+### Easy setup with Claude Desktop (Windows or macOS)
+
+1. Download this template from GitHub (green "Code" button → "Download ZIP") and unzip it
+2. Open Claude Desktop and point it to the unzipped folder
+3. Type **`/windows-setup`** or **`/mac-setup`** — this automatically installs all prerequisites
+4. When setup finishes, type `/interview` to configure your thesis
+
+That's it. No terminal knowledge required.
+
+### Manual setup (all platforms)
 
 ### 2. Clone and set up
 
@@ -29,6 +42,8 @@ python setup.py
 claude .
 ```
 
+Or open the folder in Claude Desktop or the Claude web app.
+
 ### 4. Run the interview
 
 Inside Claude Code, type:
@@ -43,6 +58,8 @@ This sets up your student profile, thesis proposal, and configures the AI assist
 
 | Skill | What it does |
 |---|---|
+| `/windows-setup` | **Windows only:** installs all prerequisites automatically via winget |
+| `/mac-setup` | **macOS only:** installs all prerequisites automatically via Homebrew |
 | `/interview` | One-time setup: creates your student profile and proposal |
 | `/literature-review` | Maps literature streams and suggests search queries |
 | `/citation-search` | Returns search queries for a claim or topic |
