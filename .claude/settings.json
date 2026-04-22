@@ -22,8 +22,7 @@
       "Bash(del:*)",
       "Bash(rmdir:*)",
       "Edit(data/raw/**)",
-      "Edit(setup.py)",
-      "Edit(.claude/**)"
+      "Edit(setup.py)"
     ]
   },
   "hooks": {
