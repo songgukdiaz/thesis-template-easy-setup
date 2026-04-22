@@ -25,15 +25,14 @@ You need [Claude Desktop](https://claude.ai/download) installed on your computer
 
 1. Download this template from GitHub (green "Code" button → "Download ZIP")
 2. Extract the ZIP file to a folder on your computer
-3. Inside the extracted folder, find and double-click the starter script for your system:
-   - **Mac:** `start-mac.command`
-   - **Windows:** `start-windows.bat`
-4. Open Claude Desktop and go to the **Code** section
-5. Open this project folder
-6. Type **`/mac-setup`** or **`/windows-setup`** — this installs all remaining prerequisites automatically
-7. When setup finishes, type **`/interview`** to configure your thesis
-
-That's it. No terminal knowledge required.
+3. Open a terminal in the extracted folder:
+   - **Mac:** Open Terminal, type `cd ` (with a space), then drag the folder into the Terminal window and press Enter
+   - **Windows:** Open the folder in File Explorer, click the address bar, type `cmd`, and press Enter
+4. Run `git init` and press Enter
+5. Open Claude Desktop and go to the **Code** section
+6. Open this project folder
+7. Type **`/mac-setup`** or **`/windows-setup`** — this installs all remaining prerequisites automatically
+8. When setup finishes, type **`/interview`** to configure your thesis
 
 ### Manual setup (all platforms)
 
